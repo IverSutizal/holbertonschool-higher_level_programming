@@ -1,64 +1,56 @@
-# run test with python3 -m doctest -v ./tests/0-add_integer.txt
+The Add_Integer Module:
+=======================
 
-First import method to test
->>> add_integer = __import__('0-add_integer').add_integer
+    >>> add_integer = __import__("0-add_integer").add_integer
 
-SUCCESS CASES:
+Make Sure Documentation Exists:
 
-Test signed and unsigned ints and floats:
-     >>> print(add_integer(1, 2))
-     3
-     >>> print(add_integer(-1, 2))
-     1
-     >>> print(add_integer(1.5, 2.9))
-     3
-     >>> print(add_integer(-2.9, 1))
-     -1
+    >>> module_documentation = __import__("0-add_integer").__doc__
+    >>> print(len(module_documentation) > 0)
+    True
 
-Test use of default b=98 value:
-     >>> print(add_integer(1))
-     99
+    >>> function_documentation = __import__("0-add_integer").add_integer.__doc__
+    >>> print(len(function_documentation) > 0)
+    True
 
-FAIL CASES:
+Correct Usage:
 
-Test no args:
-     >>> print(add_integer(None))
-     Traceback (most recent call last):
-     ...
-     TypeError: a must be an integer
-     >>> print(add_integer(None, None))
-     Traceback (most recent call last):
-     ...
-     TypeError: a must be an integer
+    >>> print(add_integer(1, 2))
+    3
 
-Test extra args:
-     >>> print(add_integer(1, 2, 3))
-     Traceback (most recent call last):
-     ...
-     TypeError: add_integer() takes from 1 to 2 positional arguments but 3 were given
+    >>> print(add_integer(100, -2))
+    98
 
-Test other data types:
-     >>> print(add_integer("hey"))
-     Traceback (most recent call last):
-     ...
-     TypeError: a must be an integer
-     >>> print(add_integer(0, [1, 2, 3]))
-     Traceback (most recent call last):
-     ...
-     TypeError: b must be an integer
+    >>> print(add_integer(100.3, -2))
+    98
 
-Test max/min numbers Python can handle ("inf" is infinity):
-     >>> print(add_integer(float("inf")))
-     Traceback (most recent call last):
-     ...
-     OverflowError: cannot convert float infinity to integer
-     >>> print(add_integer(float("-inf")))
-     Traceback (most recent call last):
-     ...
-     OverflowError: cannot convert float infinity to integer
+    >>> print(add_integer(-100.3, -2))
+    -102
 
-Test special float NaN in Python (not a number):
-     >>> print(add_integer(float("NaN")))
-     Traceback (most recent call last):
-     ...
-     ValueError: cannot convert float NaN to integer
+    >>> print(add_integer(2**3, -2))
+    6
+
+    >>> print(add_integer(8**0.3, -2))
+    -1
+
+
+On Errors:
+    >>> print(add_integer(4, "School"))
+    Traceback (most recent call last):
+    TypeError: b must be an integer
+
+    >>> print(add_integer("Holberton", "School"))
+    Traceback (most recent call last):
+    TypeError: a must be an integer
+
+    >>> print(add_integer(None, 3))
+    Traceback (most recent call last):
+    TypeError: a must be an integer
+
+    >>> print(add_integer([1, 2, 3], 3))
+    Traceback (most recent call last):
+    TypeError: a must be an integer
+
+    >>> print(add_integer(foo(3), -2))
+    Traceback (most recent call last):
+    NameError: name 'foo' is not defined

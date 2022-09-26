@@ -1,50 +1,83 @@
-# run test with python3 -m doctest -v ./tests/5-text_indentation.txt
+The 5-text_indentation Module:
 
-First import method to test
->>> text_indentation = __import__('5-text_indentation').text_indentation
+    >>> text_indentation = __import__("5-text_indentation").text_indentation
 
-SUCCESS CASES:
+    >>> t="Hello. I am a string? Here is what you should do: parse me."
 
-Test string:
-     >>> text_indentation("""Lorem ipsum dolor sit amet, consectetur adipiscing elit. \
-     ... Quonam modo? Utrum igitur tibi litteram videor an totas paginas commovere? \
-     ... Non autem hoc: igitur ne illud quidem. Fortasse id optimum, sed ubi illud""")
-     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-     <BLANKLINE>
-     Quonam modo?
-     <BLANKLINE>
-     Utrum igitur tibi litteram videor an totas paginas commovere?
-     <BLANKLINE>
-     Non autem hoc:
-     <BLANKLINE>
-     igitur ne illud quidem.
-     <BLANKLINE>
-     Fortasse id optimum, sed ubi illud
+Correct Usage:
 
-Test string with extra spaces (shouldn't print spaces at beginning or end of lines):
-     >>> text_indentation("   A B.     C D?      E F:     G H     ")
-     A B.
-     <BLANKLINE>
-     C D?
-     <BLANKLINE>
-     E F:
-     <BLANKLINE>
-     G H
+    >>> text_indentation("Howdy, Yall!")
+    Howdy, Yall!
 
-     >>> text_indentation("   Hey     \n     .     ")
-     Hey
-     .
-     <BLANKLINE>
+    >>> text_indentation(t)
+    Hello.
+    <BLANKLINE>
+    I am a string?
+    <BLANKLINE>
+    Here is what you should do:
+    <BLANKLINE>
+    parse me.
+    <BLANKLINE>
 
-     >>> text_indentation("      Hello      ")
-     Hello
+    >>> t="Hello. : \nI am a string? .\n"
+    >>> text_indentation(t)
+    Hello.
+    <BLANKLINE>
+    :
+    <BLANKLINE>
+    <BLANKLINE>
+    I am a string?
+    <BLANKLINE>
+    .
+    <BLANKLINE>
+    <BLANKLINE>
 
-     >>> text_indentation("    ")
+    >>> t=" : . ? "
+    >>> text_indentation(t)
+    :
+    <BLANKLINE>
+    .
+    <BLANKLINE>
+    ?
+    <BLANKLINE>
 
-FAIL CASES:
+    >>> t = "    MY SPOON IS TOO BIG!...    I am a banana.\n     blearg    "
+    >>> text_indentation(t)
+    MY SPOON IS TOO BIG!.
+    <BLANKLINE>
+    .
+    <BLANKLINE>
+    .
+    <BLANKLINE>
+    I am a banana.
+    <BLANKLINE>
+    <BLANKLINE>
+    blearg
 
-Test other data types:
-     >>> text_indentation(-1)
-     Traceback (most recent call last):
-     ...
-     TypeError: text must be a string
+    >>> t = "Mwa" + "ha" * 2
+    >>> text_indentation(t)
+    Mwahaha
+
+    >>> text_indentation("")
+
+On Errors:
+
+    >>> text_indentation()
+    Traceback (most recent call last):
+    TypeError: text_indentation() missing 1 required positional argument: 'text'
+
+    >>> text_indentation("ble", "ooh", "wah")
+    Traceback (most recent call last):
+    TypeError: text_indentation() takes 1 positional argument but 3 were given
+
+    >>> text_indentation(4)
+    Traceback (most recent call last):
+    TypeError: text must be a string
+
+    >>> text_indentation(None)
+    Traceback (most recent call last):
+    TypeError: text must be a string
+
+    >>> text_indentation(-4)
+    Traceback (most recent call last):
+    TypeError: text must be a string
