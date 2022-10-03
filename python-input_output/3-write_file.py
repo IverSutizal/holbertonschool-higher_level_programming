@@ -1,11 +1,14 @@
 #!/usr/bin/python3
 """
-Module 3-write_file
-Contains function that writes to text file and returns num chars written
+Module for to_json_to-string method.
 """
 
 
-def write_file(filename="", text=""):
-    """writes to text file and returns num chars written"""
-    with open(filename, mode="w", encoding="utf-8") as f:
-        return(f.write(text))
+import json
+
+
+def to_json_string(my_obj):
+    """
+    Returns JSON representation of an object.
+    """
+    return (json.dumps(my_obj))

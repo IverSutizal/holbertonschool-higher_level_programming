@@ -1,20 +1,15 @@
 #!/usr/bin/python3
 """
-Module 2-read_lines
-Contains function that reads n lines and prints to stdout
+Module for append_write method.
 """
 
 
-def read_lines(filename="", nb_lines=0):
-    """reads n lines and prints to stdout
-    Print:
-        n lines: if n
-        entire file: if n is less than 1 or greater than lines in file
+def append_write(filename="", text=""):
+    """append_write appends string at the end of a text file.
+    Args:
+        filename (str): name of file.
+            text (str): text to be appended to the file.
+        Returns: number of characters written.
     """
-    with open(filename, mode="r", encoding="utf-8") as f:
-        if nb_lines <= 0:
-            print(f.read(), end="")
-        else:
-            while nb_lines:
-                print(f.readline(), end="")
-                nb_lines -=
+    with open(filename, "a", encoding='utf-8') as a_file:
+        return a_file.write(text)

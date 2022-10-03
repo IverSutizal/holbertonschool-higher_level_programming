@@ -1,17 +1,17 @@
 #!/usr/bin/python3
 """
-Module 6-from_json_string
-Contains function that returns python data structure from JSON string
+Module for load_from_json_file method.
 """
 
 
-def from_json_string(my_str):
-    """Returns python data structure from JSON string
-    Args:
-        my_str: json string representation
-    Return:
-        python object
-    """
-    import json
+import json
 
-    return json.loads(my_str)
+
+def load_from_json_file(filename):
+    """loads an object from JSON file.
+        Args:
+            filename (str): name of file.
+    """
+    with open(filename, "r") as j_file:
+        my_obj = json.load(j_file)
+        return my_obj
