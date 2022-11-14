@@ -11,3 +11,4 @@ if __name__ == "__main__":
     cursor.execute("CREATE DATABASE mydatabase")
     cursor.close()
     db.close()
+    

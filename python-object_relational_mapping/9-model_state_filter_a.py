@@ -21,3 +21,4 @@ if __name__ == "__main__":
     for elem in datas:
         print("{}: {}".format(elem.id, elem.name))
     session.close()
+    

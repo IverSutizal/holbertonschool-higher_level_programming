@@ -23,3 +23,4 @@ if __name__ == "__main__":
     db.commit()
     cursor.close()
     db.close()
+    
