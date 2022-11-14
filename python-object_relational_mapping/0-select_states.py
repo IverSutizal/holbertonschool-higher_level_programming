@@ -1,17 +1,18 @@
 #!/usr/bin/python3
-""" Script that lists all states from the database hbtn_0e_0_usa
+"""This module lists all states from the database hbtn_0e_0_usa
+    Created on Saturday, November 12, 2022
+    @author: DaisyG Chipana Lapa
 """
-if __name__ == "__main__":
-    import sys
-    import MySQLdb
 
-    db = MySQLdb.connect(host="localhost",  port=3306,
-                        user=sys.argv[1], password=sys.argv[2],
-                        database=sys.argv[3])
-    cursor = db.cursor()
-    cursor.execute("SELECT * FROM states ORDER BY id ASC")
-    rows = cursor.fetchall()
-    for row in rows:
+if __name__ == '__main__':
+    import MySQLdb
+    from sys import argv
+    conn = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
+                            passwd=argv[2], db=argv[3], charset="utf8")
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM states ORDER BY id ASC")
+    query_rows = cur.fetchall()
+    for row in query_rows:
         print(row)
-    cursor.close()
-    db.close()
+    cur.close()
+    conn.close()
