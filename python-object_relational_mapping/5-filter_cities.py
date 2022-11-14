@@ -1,28 +1,28 @@
 #!/usr/bin/python3
-"""script that takes in the name of a state as an argument and lists
-    all cities of that state, using the database hbtn_0e_4_usa
+"""This module takes in the name of a state as an argument and lists
+   all cities of that state, using the database hbtn_0e_4_usa.
+   Created on Saturday, November 12, 2022
+   @author: DaisyG Chipana Lapa
 """
-if __name__ == "__main__":
-    import sys
+
+if __name__ == '__main__':
     import MySQLdb
+    from sys import argv
 
-    db = MySQLdb.connect(host="localhost",  port=3306,
-                        user=sys.argv[1], password=sys.argv[2],
-                        database=sys.argv[3])
-
-    cursor = db.cursor()
-    stateName = sys.argv[4]
-    cursor.execute("SELECT c.id, c.name, s.name\
-                    FROM cities AS c\
-                    JOIN states AS s\
-                    ON c.state_id=s.id ORDER BY s.id;")
-    lists = []
-    rows = cursor.fetchall()
-    for row in rows:
-        if row[2] == stateName:
-            lists.append(row[1])
-    print(", ".join(lists))
-    db.commit()
-    cursor.close()
-    db.close()
-    
+    cont = 0
+    conn = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
+                           passwd=argv[2], db=argv[3], charset="utf8mb4")
+    cur = conn.cursor()
+    cur.execute("SELECT cities.name FROM cities INNER JOIN states "
+                "ON cities.state_id = states.id WHERE BINARY states.name "
+                "= BINARY %(states.name)s ORDER BY cities.id ASC",
+                {'states.name': argv[4]})
+    query_rows = cur.fetchall()
+    for row in query_rows:
+        if cont > 0:
+            print(", ", end="")
+        print(row[0], end="")
+        cont = cont + 1
+    print()
+    cur.close()
+    conn.close()

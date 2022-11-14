@@ -1,27 +1,19 @@
 #!/usr/bin/python3
-""" Script that lists all cities from
-    the database hbtn_0e_4_usa.
+"""This module  lists all cities from the database hbtn_0e_4_usa
+   Created on Saturday, November 12, 2022
+   @author: DaisyG Chipana Lapa
 """
 
-
-if __name__ == "__main__":
-    import sys
+if __name__ == '__main__':
     import MySQLdb
-
-    db = MySQLdb.connect(host="localhost",  port=3306,
-                        user=sys.argv[1], password=sys.argv[2],
-                        database=sys.argv[3])
-
-    cursor = db.cursor()
-    will = """SELECT cities.id, cities.name, states.name
-            FROM cities JOIN states
-            ON cities.state_id = states.id
-            ORDER BY id ASC"""
-    cursor.execute(will)
-    rows = cursor.fetchall()
-    for row in rows:
+    from sys import argv
+    conn = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
+                           passwd=argv[2], db=argv[3], charset="utf8mb4")
+    cur = conn.cursor()
+    cur.execute("SELECT cities.id, cities.name, states.name "
+                "FROM cities INNER JOIN states ON cities.state_id = states.id")
+    query_rows = cur.fetchall()
+    for row in query_rows:
         print(row)
-    db.commit()
-    cursor.close()
-    db.close()
-    
+    cur.close()
+    conn.close()

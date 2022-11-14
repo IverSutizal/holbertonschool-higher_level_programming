@@ -1,25 +1,32 @@
 #!/usr/bin/python3
-"""cript that lists all State objects that contain the letter a from the
-database hbtn_0e_6_usa
+"""deletes all State objects with a name containing the letter a from the
+   database hbtn_0e_6_usa
+   Created on Sunday, December 13, 2022
+   @author: DaisyG Chipana Lapa
 """
+import sys
+from model_state import Base, State
+
+from sqlalchemy import (create_engine)
+from sqlalchemy.orm import (sessionmaker)
+
 if __name__ == "__main__":
-
-    import sys
-    from model_state import Base, State
-    from sqlalchemy import create_engine
-    from sqlalchemy import Column, Integer, String
-    from sqlalchemy.ext.declarative import declarative_base
-    from sqlalchemy.orm import sessionmaker
-
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(
-        sys.argv[1], sys.argv[2], sys.argv[3]), pool_pre_ping=True)
-    Session = sessionmaker(engine)
-    session = Session()
+    # create an engine
+    engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'
+                           .format(sys.argv[1], sys.argv[2],
+                                   sys.argv[3]), echo=True)
     Base.metadata.create_all(engine)
 
-    datas = session.query(State).filter(State.name.like('%a%'))
-    for elem in datas:
-        session.delete(elem)
+    # create a configured "Session" class
+    Session = sessionmaker(bind=engine)
+
+    # create a Session
+    session = Session()
+
+    # delete records
+    query = session.query(State).filter(State.name.like('%a%'))
+    for deleted_rec in query.all():
+        session.delete(deleted_rec)
     session.commit()
+
     session.close()
-    

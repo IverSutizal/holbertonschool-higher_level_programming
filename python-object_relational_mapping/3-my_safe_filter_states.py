@@ -1,26 +1,21 @@
 #!/usr/bin/python3
-""" Script  that takes in an argument and displays all values in the states
-table of hbtn_0e_0_usa where name matches the argument preventing SQL
-injection.
+"""This module takes in an argument and displays all values in the states table
+   of hbtn_0e_0_usa where name.
+   Code write one that is safe from MySQL injections.
+   Created on Saturday, November 12, 2022
+   @author: DaisyG Chipana Lapa
 """
-if __name__ == "__main__":
-    import sys
+
+if __name__ == '__main__':
     import MySQLdb
-
-    db = MySQLdb.connect(host="localhost",  port=3306,
-                        user=sys.argv[1], password=sys.argv[2],
-                        database=sys.argv[3])
-
-    cursor = db.cursor()
-    st = sys.argv[4]
-    will = "SELECT * FROM states WHERE name=%s ORDER BY id ASC"
-    val = (st,)
-    cursor.execute(will, val)
-    rows = cursor.fetchall()
-    for row in rows:
-        if row[1] == st:
-            print(row)
-    db.commit()
-    cursor.close()
-    db.close()
-    
+    from sys import argv
+    conn = MySQLdb.connect(host="localhost", port=3306, user=argv[1],
+                           passwd=argv[2], db=argv[3], charset="utf8mb4")
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM states WHERE BINARY "
+                "name = BINARY %(name)s ORDER BY id ASC", {'name': argv[4]})
+    query_rows = cur.fetchall()
+    for row in query_rows:
+        print(row)
+    cur.close()
+    conn.close()

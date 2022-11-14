@@ -1,25 +1,32 @@
 #!/usr/bin/python3
-"""cript that lists all State objects that contain the letter a from the
-database hbtn_0e_6_usa
+"""adds the State object “Louisiana” to the database hbtn_0e_6_usa
+   Created on Sunday, December 13, 2022
+   @author: DaisyG Chipana Lapa
 """
+import sys
+from model_state import Base, State
+
+from sqlalchemy import (create_engine)
+from sqlalchemy.orm import (sessionmaker)
+
 if __name__ == "__main__":
-
-    import sys
-    from model_state import Base, State
-    from sqlalchemy import create_engine
-    from sqlalchemy import Column, Integer, String
-    from sqlalchemy.ext.declarative import declarative_base
-    from sqlalchemy.orm import sessionmaker
-
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'.format(
-        sys.argv[1], sys.argv[2], sys.argv[3]), pool_pre_ping=True)
-    Session = sessionmaker(engine)
-    session = Session()
+    # create an engine
+    engine = create_engine('mysql+mysqldb://{}:{}@localhost:3306/{}'
+                           .format(sys.argv[1], sys.argv[2],
+                                   sys.argv[3]), echo=False)
     Base.metadata.create_all(engine)
 
-    new_state = State(name="Louisiana")
-    session.add(new_state)
+    # create a configured "Session" class
+    Session = sessionmaker(bind=engine)
+
+    # create a Session
+    session = Session()
+
+    # add new record
+    new_rec = State(name="Louisiana")
+    session.add(new_rec)
     session.commit()
-    print(new_state.id)
+
+    print(session.query(State).count())
+
     session.close()
-    
